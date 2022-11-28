@@ -1,23 +1,23 @@
 #include "Node.h"
 #include "myStack.cpp"
+#include <stack>
 
 
 Node* constructTree(int input[], int size) {
 	// making the last element as root
 	Node* root = new Node(input[size - 1]);
-	myStack<Node*> st(size);
-	Node* x;
+	myStack<Node*> st(100);
 	st.Push(root);
 
 	// traversing from second last node
-	for (int i = size - 2; i >= 0; i++) {
+	for (int i = size - 2; i >= 0; i--) {
 		Node* newNode = new Node(input[i]);
+
 		// Keep popping nodes while top()
 		// of stack is greater.
 		Node* temp = NULL;
-		while (!st.IsEmpty() && st.TopElement()->data < input[i]) {
-			temp = st.TopElement();
-			st.Pop(x);
+		while (st.getSize() && (input[i] > st.TopElement()->data)) {
+			temp = st.TopElement(), st.Pop();
 		}
 		// the stack became empty but (st.TopElement()->data < input[i])
 		// still returned true 
@@ -46,10 +46,33 @@ void printInorder(Node* node) {
 	printInorder(node->right);
 }
 
+Node* search(Node* root, int key) {
+	Node* node = root;
+	while (node->data != key) {
+		if (node != NULL) {
+			// go to left
+			if (node->data > key) {
+				node = node->left;
+			}
+			// go right
+			else {
+				node = node->right;
+			}
+		}
+		else {
+			return NULL;
+		}
+	}
+	return node;
+}
 
 
-void main() {
+
+int main() {
 	int input[] = { 1, 7, 5, 50, 40, 10 };
-	Node* myNode = constructTree(input, sizeof(input) / sizeof(int));
+	int size = sizeof(input) / sizeof(int);
+	Node* myNode = constructTree(input, size);
 	printInorder(myNode);
+
+	return 0;
 }

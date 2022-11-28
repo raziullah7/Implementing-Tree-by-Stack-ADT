@@ -27,14 +27,13 @@ void myStack<T>::Push(T element) {
 
 // pop function
 template <class T>
-void myStack<T>::Pop(T& element) {
+void myStack<T>::Pop() {
 	if (top == -1) {
 		cout << "Stack Underflow Occured!" << endl;
 		return;
 	}
-	/*element = s[top];
-	top--;*/
-	element = s[top--];
+	// element = s[top];
+	top--;
 	len--;
 }
 
