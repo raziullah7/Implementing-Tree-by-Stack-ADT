@@ -1,4 +1,5 @@
 #include "myStack.h"
+#include <iostream>
 
 // constructor
 template <class T>
